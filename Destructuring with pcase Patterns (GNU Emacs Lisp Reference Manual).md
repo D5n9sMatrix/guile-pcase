@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html><!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ --><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Destructuring with pcase Patterns (GNU Emacs Lisp Reference Manual)</title>
+
+<meta name="description" content="Destructuring with pcase Patterns (GNU Emacs Lisp Reference Manual)">
+<meta name="keywords" content="Destructuring with pcase Patterns (GNU Emacs Lisp Reference Manual)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="https://www.gnu.org/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<div class="subsection-level-extent" id="Destructuring-with-pcase-Patterns">
+<div class="nav-panel">
+<p>
+Previous: <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Backquote-Patterns.html" accesskey="p" rel="prev">Backquote-Style Patterns</a>, Up: <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Pattern_002dMatching-Conditional.html" accesskey="u" rel="up">Pattern-Matching Conditional</a> &nbsp; [<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="Destructuring-with-pcase-Patterns-1">11.4.4 Destructuring with <code class="code">pcase</code> Patterns</h4>
+<a class="index-entry-id" id="index-destructuring-with-pcase-patterns"></a>
+
+<p>Pcase patterns not only express a condition on the form of the objects
+they can match, but they can also extract sub-fields of those objects.
+For example we can extract 2 elements from a list that is the value of
+the variable <code class="code">my-list</code> with the following code:
+</p>
+<div class="example">
+<pre class="example-preformatted">  (pcase my-list
+    (`(add ,x ,y)  (message "Contains %S and %S" x y)))
+</pre></div>
+
+<p>This will not only extract <code class="code">x</code> and <code class="code">y</code> but will additionally
+test that <code class="code">my-list</code> is a list containing exactly 3 elements and
+whose first element is the symbol <code class="code">add</code>.  If any of those tests
+fail, <code class="code">pcase</code> will immediately return <code class="code">nil</code> without calling
+<code class="code">message</code>.
+</p>
+<p>Extraction of multiple values stored in an object is known as
+<em class="dfn">destructuring</em>.  Using <code class="code">pcase</code> patterns allows to perform
+<em class="dfn">destructuring binding</em>, which is similar to a local binding
+(see <a class="pxref" href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Local-Variables.html">Local Variables</a>), but gives values to multiple elements of
+a variable by extracting those values from an object of compatible
+structure.
+</p>
+<p>The macros described in this section use <code class="code">pcase</code> patterns to
+perform destructuring binding.  The condition of the object to be of
+compatible structure means that the object must match the pattern,
+because only then the object’s subfields can be extracted.  For
+example:
+</p>
+<div class="example">
+<pre class="example-preformatted">  (pcase-let ((`(add ,x ,y) my-list))
+    (message "Contains %S and %S" x y))
+</pre></div>
+
+<p>does the same as the previous example, except that it directly tries
+to extract <code class="code">x</code> and <code class="code">y</code> from <code class="code">my-list</code> without first
+verifying if <code class="code">my-list</code> is a list which has the right number of
+elements and has <code class="code">add</code> as its first element.  The precise
+behavior when the object does not actually match the pattern is
+undefined, although the body will not be silently skipped: either an
+error is signaled or the body is run with some of the variables
+potentially bound to arbitrary values like <code class="code">nil</code>.
+</p>
+<p>The pcase patterns that are useful for destructuring bindings are
+generally those described in <a class="ref" href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Backquote-Patterns.html">Backquote-Style Patterns</a>, since they
+express a specification of the structure of objects that will match.
+</p>
+<p>For an alternative facility for destructuring binding, see
+<a class="ref" href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Sequence-Functions.html#seq_002dlet">seq-let</a>.
+</p>
+<dl class="first-deffn first-defmac-alias-first-deffn">
+<dt class="deffn defmac-alias-deffn" id="index-pcase_002dlet"><span class="category-def">Macro: </span><span><strong class="def-name">pcase-let</strong> <var class="def-var-arguments">bindings body…</var><a class="copiable-link" href="#index-pcase_002dlet"> ¶</a></span></dt>
+<dd><p>Perform destructuring binding of variables according to
+<var class="var">bindings</var>, and then evaluate <var class="var">body</var>.
+</p>
+<p><var class="var">bindings</var> is a list of bindings of the form <code class="code">(<var class="var">pattern</var>&nbsp;<var class="var">exp</var>)</code><!-- /@w -->, where <var class="var">exp</var> is an expression to evaluate and
+<var class="var">pattern</var> is a <code class="code">pcase</code> pattern.
+</p>
+<p>All <var class="var">exp</var>s are evaluated first, after which they are matched
+against their respective <var class="var">pattern</var>, introducing new variable
+bindings that can then be used inside <var class="var">body</var>.  The variable
+bindings are produced by destructuring binding of elements of
+<var class="var">pattern</var> to the values of the corresponding elements of the
+evaluated <var class="var">exp</var>.
+</p>
+<p>Here’s a trivial example:
+</p>
+<div class="example">
+<pre class="example-preformatted">(pcase-let ((`(,major ,minor)
+	     (split-string "image/png" "/")))
+  minor)
+     ⇒ "png"
+</pre></div>
+</dd></dl>
+
+<dl class="first-deffn first-defmac-alias-first-deffn">
+<dt class="deffn defmac-alias-deffn" id="index-pcase_002dlet_002a"><span class="category-def">Macro: </span><span><strong class="def-name">pcase-let*</strong> <var class="def-var-arguments">bindings body…</var><a class="copiable-link" href="#index-pcase_002dlet_002a"> ¶</a></span></dt>
+<dd><p>Perform destructuring binding of variables according to
+<var class="var">bindings</var>, and then evaluate <var class="var">body</var>.
+</p>
+<p><var class="var">bindings</var> is a list of bindings of the form <code class="code">(<var class="var">pattern</var>
+<var class="var">exp</var>)</code>, where <var class="var">exp</var> is an expression to evaluate and
+<var class="var">pattern</var> is a <code class="code">pcase</code> pattern.  The variable bindings are
+produced by destructuring binding of elements of <var class="var">pattern</var> to the
+values of the corresponding elements of the evaluated <var class="var">exp</var>.
+</p>
+<p>Unlike <code class="code">pcase-let</code>, but similarly to <code class="code">let*</code>, each <var class="var">exp</var>
+is matched against its corresponding <var class="var">pattern</var> before processing
+the next element of <var class="var">bindings</var>, so the variable bindings
+introduced in each one of the <var class="var">bindings</var> are available in the
+<var class="var">exp</var>s of the <var class="var">bindings</var> that follow it, additionally to
+being available in <var class="var">body</var>.
+</p></dd></dl>
+
+<dl class="first-deffn first-defmac-alias-first-deffn">
+<dt class="deffn defmac-alias-deffn" id="index-pcase_002ddolist"><span class="category-def">Macro: </span><span><strong class="def-name">pcase-dolist</strong> <var class="def-var-arguments">(pattern list) body…</var><a class="copiable-link" href="#index-pcase_002ddolist"> ¶</a></span></dt>
+<dd><p>Execute <var class="var">body</var> once for each element of <var class="var">list</var>, on each
+iteration performing a destructuring binding of variables in
+<var class="var">pattern</var> to the values of the corresponding subfields of the
+element of <var class="var">list</var>.  The bindings are performed as if by
+<code class="code">pcase-let</code>.  When <var class="var">pattern</var> is a simple variable, this ends
+up being equivalent to <code class="code">dolist</code> (see <a class="pxref" href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Iteration.html">Iteration</a>).
+</p></dd></dl>
+
+<dl class="first-deffn first-defmac-alias-first-deffn">
+<dt class="deffn defmac-alias-deffn" id="index-pcase_002dsetq"><span class="category-def">Macro: </span><span><strong class="def-name">pcase-setq</strong> <var class="def-var-arguments">pattern value…</var><a class="copiable-link" href="#index-pcase_002dsetq"> ¶</a></span></dt>
+<dd><p>Assign values to variables in a <code class="code">setq</code> form, destructuring each
+<var class="var">value</var> according to its respective <var class="var">pattern</var>.
+</p></dd></dl>
+
+<dl class="first-deffn first-defmac-alias-first-deffn">
+<dt class="deffn defmac-alias-deffn" id="index-pcase_002dlambda"><span class="category-def">Macro: </span><span><strong class="def-name">pcase-lambda</strong> <var class="def-var-arguments">lambda-list &amp;rest body</var><a class="copiable-link" href="#index-pcase_002dlambda"> ¶</a></span></dt>
+<dd><p>This is like <code class="code">lambda</code>, but allows each argument to be a pattern.
+For instance, here’s a simple function that takes a cons cell as the
+argument:
+</p>
+<div class="example">
+<pre class="example-preformatted">(setq fun
+      (pcase-lambda (`(,key . ,val))
+        (vector key (* val 10))))
+(funcall fun '(foo . 2))
+    ⇒ [foo 20]
+</pre></div>
+</dd></dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Previous: <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Backquote-Patterns.html">Backquote-Style Patterns</a>, Up: <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Pattern_002dMatching-Conditional.html">Pattern-Matching Conditional</a> &nbsp; [<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+
+
+</body></html>

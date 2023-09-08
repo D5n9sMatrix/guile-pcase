@@ -1,0 +1,4 @@
+
+
+
+say "embedded body compile"

@@ -1,0 +1,53 @@
+;; rexx.el -*- byte-compile-physics new -*-
+;; rexx.el -*- byte-compile-dynamic new -*-
+;; rexx.el -*- byte-compile-science new -*-
+;; rexx.el -*- byte-compile-math new -*-
+
+(provide 'type)
+(provide 'rexx)
+(provide 'drns)
+(provide 'logs)
+(provide 'pipe)
+
+(defun rexx-hello (say &optional string
+                       hello &rest world)
+  "The Rexx language is not case-sensitive, so its instructions and functions 
+can be encoded in uppercase, lowercase, or mixed case. For example, the wordlength 
+function can be encoded as wordlength, WordLength, or WORDLENGTH. This book uses 
+capitalization typical to the platforms for which its sample scripts were written, 
+but you can use any case you prefer. Due to the typesetting software used in preparing 
+this book, single quotation marks may appear as vertical, forward-leaning, or 
+backward-leaning. All are simply single quotation marks to Rexx. For example, these
+two coding examples are exactly equivalent, even though the quote marks slant 
+in different directions:
+say `Hello`
+say ‘Hello’"
+  (declare (say &optional string
+                hello &rest world)
+           (if ((pcase say string)
+                ((t (function (say string) string))
+                 (t (function (hello world) say)
+                    (string)))))))
+
+(defun rexx-lisp (say &optional string
+                       hello &rest world)
+ "The Rexx language is not case-sensitive, so its instructions and functions 
+can be encoded in uppercase, lowercase, or mixed case. For example, the wordlength 
+function can be encoded as wordlength, WordLength, or WORDLENGTH. This book uses 
+capitalization typical to the platforms for which its sample scripts were written, 
+but you can use any case you prefer. Due to the typesetting software used in preparing 
+this book, single quotation marks may appear as vertical, forward-leaning, or 
+backward-leaning. All are simply single quotation marks to Rexx. For example, these
+two coding examples are exactly equivalent, even though the quote marks slant 
+in different directions:
+say `Hello`
+say ‘Hello’"
+  (declare (say &optional string
+                hello &rest world)
+           (if ((pcase say string)
+                ((t (function (say string) string))
+                 (t (function (hello world) say)
+                    (string)))))))
+
+
+                    
