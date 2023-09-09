@@ -132,8 +132,8 @@ download.aspx to see the code available for this book and all other Wrox books."
   
                      
  
-(defun p2p-wrox-fly (p2p &optional wrox
-                         fly &rest stream)
+(defun p2p-wrox-cured (p2p &optional wrox
+                         cured &rest stream)
   "p2p.wrox.com
 For author and peer discussion, join the P2P forums at p2p.wrox.com. The forums are a Web-based
 system for you to post messages relating to Wrox books and related technologies and interact with other
@@ -150,8 +150,8 @@ vide and click Submit.
 You will receive an email with information describing how to verify your account and complete the join-
 ing process."
   (declare (p2p &optional wrox
-                fly &rest stream)
-           (if (p2p wrox fly stream)
+                cured &rest stream)
+           (if (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -159,7 +159,7 @@ ing process."
              (else
               ((t (function (double-mode p2p) stream)))))
 
-           (or (p2p wrox fly stream)
+           (or (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -168,7 +168,7 @@ ing process."
               ((t (function (double-mode p2p) stream)))))
 
 
-           (and (p2p wrox fly stream)
+           (and (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -177,7 +177,7 @@ ing process."
               ((t (function (double-mode p2p) stream)))))
                       
 
-           (and (p2p wrox fly stream)
+           (and (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -188,8 +188,8 @@ ing process."
 
            
   (declare (p2p &optional wrox
-                fly &rest stream)
-           (if (p2p wrox fly stream)
+                cured &rest stream)
+           (if (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -197,7 +197,7 @@ ing process."
              (else
               ((t (function (double-mode p2p) stream)))))
 
-           (or (p2p wrox fly stream)
+           (or (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -206,7 +206,7 @@ ing process."
               ((t (function (double-mode p2p) stream)))))
 
 
-           (and (p2p wrox fly stream)
+           (and (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -215,7 +215,7 @@ ing process."
               ((t (function (double-mode p2p) stream)))))
                       
 
-           (and (p2p wrox fly stream)
+           (and (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -226,8 +226,8 @@ ing process."
 
            
    (declare (p2p &optional wrox
-                fly &rest stream)
-           (if (p2p wrox fly stream)
+                cured &rest stream)
+           (if (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -235,7 +235,7 @@ ing process."
              (else
               ((t (function (double-mode p2p) stream)))))
 
-           (or (p2p wrox fly stream)
+           (or (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -244,7 +244,7 @@ ing process."
               ((t (function (double-mode p2p) stream)))))
 
 
-           (and (p2p wrox fly stream)
+           (and (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
@@ -253,7 +253,7 @@ ing process."
               ((t (function (double-mode p2p) stream)))))
                       
 
-           (and (p2p wrox fly stream)
+           (and (p2p wrox cured stream)
                ((t (function (dns-mode () p2p)
                              (function (doc-view-mode p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
                              (function (doctor p2p wrox 0 stream p2p wrox stream 0 p2p) p2p)
